@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Profile - Nicole Fernandez</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Basic Reset & Body Styling */
         * {
             margin: 0;
             padding: 0;
@@ -12,98 +15,202 @@
         }
 
         body {
-            font-family: "Inter", sans-serif;
-            background-color: #f5f5f5;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
             color: #333;
-            transition: background-color 0.5s ease;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        .navbar {
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /*
+        ---
+        HEADER STYLES (from second file)
+        ---
+        */
+        .header {
+            background-color: #fff;
+            padding: 15px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 2rem;
-            background: white;
+            flex-shrink: 0;
+            width: 100%;
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
             z-index: 100;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .hamburger-icon {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+            padding: 5px;
+            display: block;
+            flex-shrink: 0;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 24px;
+            font-weight: 700;
             color: #2d5016;
+            gap: 10px;
             text-decoration: none;
-            cursor: pointer;
-            transition: opacity 0.3s;
-        }
-
-        .logo:hover {
-            opacity: 0.8;
         }
 
         .logo img {
-            width: 24px;
-            height: 24px;
+            width: 30px;
+            height: 30px;
         }
 
-        .nav-links {
+        .top-nav-links {
             display: flex;
-            gap: 2rem;
-            list-style: none;
+            gap: 25px;
             align-items: center;
         }
 
-        .nav-links a {
+        .top-nav-links a {
             text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s;
-            padding: 0.5rem 1rem;
+            color: #555;
+            font-weight: 600;
+            padding: 8px 12px;
+            transition: color 0.3s ease, background-color 0.3s ease;
+            border-radius: 8px;
         }
 
-        .nav-links a:hover {
+        .top-nav-links a:hover {
             color: #2d5016;
+            background-color: #e6f7e6;
         }
 
-        .nav-links .login-btn {
-            background: #9ACD32;
-            padding: 0.5rem 1.5rem;
+        .top-nav-links .login-btn {
+            background-color: #9ACD32;
+            color: #2d5016;
+            padding: 10px 20px;
             border-radius: 20px;
-            text-decoration: none;
-            color: #2d5016;
             font-weight: bold;
-            transition: background 0.3s;
+            transition: background-color 0.3s ease;
         }
 
-        .nav-links .login-btn:hover {
-            background: #8FBC8F;
+        .top-nav-links .login-btn:hover {
+            background-color: #8FBC8F;
+            color: #2d5016;
         }
 
-        .hamburger {
-            display: none;
+        /*
+        ---
+        SIDEBAR STYLES (from second file)
+        ---
+        */
+        .sidebar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar-container.open {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .sidebar-menu {
+            width: 280px;
+            height: 100%;
+            background-color: #fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
             flex-direction: column;
+        }
+
+        .sidebar-menu.open {
+            transform: translateX(0);
+        }
+
+        .close-sidebar-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
             cursor: pointer;
-            gap: 3px;
+            color: #555;
+            align-self: flex-end;
+            margin-bottom: 20px;
         }
 
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: #333;
-            transition: 0.3s;
+        .sidebar-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
         }
 
+        .sidebar-links li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-links a {
+            display: block;
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .sidebar-links a:hover {
+            background-color: #e6f7e6;
+            color: #2d5016;
+        }
+
+        .sidebar-links a.active {
+            background-color: #d4edda;
+            color: #2d5016;
+            font-weight: 700;
+        }
+
+        /*
+        ---
+        MAIN CONTENT STYLES (original with adjustments)
+        ---
+        */
         .main-content {
             max-width: 1200px;
-            margin: 120px auto 40px;
+            margin: 100px auto 40px;
             padding: 0 20px;
+            flex-grow: 1;
         }
 
         .profile-section {
@@ -298,7 +405,6 @@
             background-color: #f9f9f9;
         }
 
-        /* Alternating row colors with B0CC29 */
         .quiz-table tbody tr:nth-child(1) {
             background-color: rgba(176, 204, 41, 0.25);
         }
@@ -349,108 +455,163 @@
             min-height: 100px;
         }
 
+        /*
+        ---
+        FOOTER STYLES (from second file)
+        ---
+        */
         .footer {
-            background-color: #4F6D3F;
-            color: #e0e0e0;
-            padding: 40px 0;
-            margin-top: 50px;
+            background-color: #4F6D44;
+            color: #fff;
+            padding: 60px 0 30px;
+            position: relative;
+            margin-top: auto;
+            flex-shrink: 0;
         }
 
         .footer-content {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding-top: 0;
             max-width: 1200px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 40px;
-            padding: 0 20px;
         }
 
-        .footer-section h3 {
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 15px;
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+            color: #fff;
+            text-align: center;
         }
 
-        .footer-section ul {
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .footer-column ul {
             list-style: none;
+            padding-left: 0;
         }
 
-        .footer-section ul li {
-            margin-bottom: 8px;
+        .footer-column ul li {
+            margin-bottom: 10px;
         }
 
-        .footer-section ul li a {
-            color: #e0e0e0;
+        .footer-column ul li a, .footer-column ul li {
             text-decoration: none;
+            color: #eee;
             transition: color 0.3s ease;
         }
 
-        .footer-section ul li a:hover {
-            color: #9ACD32;
+        .footer-column ul li a:hover {
+            color: #c9e4c9;
+        }
+
+        .footer-social-icons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+            align-items: center;
+        }
+
+        .footer-social-icons a {
+            color: #eee;
+            font-size: 16px;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-social-icons a:hover {
+            color: #fff;
         }
 
         .footer-bottom {
-            border-top: 1px solid #666;
-            margin-top: 30px;
-            padding-top: 20px;
             text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 14px;
+            color: #aaa;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
+        .footer-bottom a {
+            text-decoration: none;
+            color: #aaa;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom a:hover {
+            color: #fff;
+        }
+
+        /*
+        ---
+        RESPONSIVE STYLES
+        ---
+        */
         @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: rgba(255, 255, 255, 0.95);
-                flex-direction: column;
-                padding: 1rem;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
             .profile-header {
                 flex-direction: column;
                 text-align: center;
                 padding-left: 0;
             }
 
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
+            .top-nav-links {
+                display: none;
+            }
+
+            .hamburger-icon {
+                display: block;
             }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <a href="#home" class="logo">
-            <img src="images/logoecomind.svg" alt="EcoMind Logo">
-            EcoMind
-        </a>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#module">Module</a></li>
-            <li><a href="#game">Game</a></li>
-            <li><a href="login.html" class="login-btn">Login</a></li>
-        </ul>
-        <div class="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
+    <!-- Header from second file with original logo -->
+    <header class="header">
+        <div class="header-left">
+            <button class="hamburger-icon" id="hamburger-icon">☰</button>
+            <a href="#home" class="logo">
+                <img src="images/logoecomind.svg" alt="EcoMind Logo">
+                EcoMind
+            </a>
         </div>
-    </nav>
+        <nav class="top-nav-links">
+            <a href="#home">Home</a>
+            <a href="#about">About Us</a>
+            <a href="#module">Module</a>
+            <a href="#game">Game</a>
+            <a href="login.html" class="login-btn">Login</a>
+        </nav>
+    </header>
 
+    <!-- Sidebar from second file -->
+    <div class="sidebar-container" id="sidebar-container">
+        <aside class="sidebar-menu" id="sidebar-menu">
+            <button class="close-sidebar-btn" id="close-sidebar-btn">&times;</button>
+            <ul class="sidebar-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#modules">Modules</a></li>
+                <li><a href="#quizzes">Quizzes</a></li>
+                <li><a href="#final-assessment">Final Assessment</a></li>
+                <li><a href="#certification">Certification</a></li>
+                <li><a href="#profile" class="active">Student Profile</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <!-- Original main content -->
     <main class="main-content">
         <div class="profile-section">
             <button class="return-button" onclick="returnToPrevious()" title="Return"></button>
@@ -542,18 +703,19 @@
         </div>
     </main>
 
+    <!-- Footer from second file -->
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
+        <div class="container footer-content">
+            <div class="footer-column">
                 <h3>ECOMIND</h3>
-                <ul>
-                    <li><a href="#" class="flex items-center"><span class="mr-2">📷</span> Instagram</a></li>
-                    <li><a href="#" class="flex items-center"><span class="mr-2">🐦</span> Twitter</a></li>
-                    <li><a href="#" class="flex items-center"><span class="mr-2">👥</span> Facebook</a></li>
-                    <li><a href="#" class="flex items-center"><span class="mr-2">📌</span> Pinterest</a></li>
-                </ul>
+                <div class="footer-social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                    <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                    <a href="#"><i class="fab fa-pinterest"></i> Pinterest</a>
+                </div>
             </div>
-            <div class="footer-section">
+            <div class="footer-column">
                 <h3>About Us</h3>
                 <ul>
                     <li><a href="#">About Ecomind</a></li>
@@ -562,16 +724,16 @@
                     <li><a href="#">Sustainability</a></li>
                 </ul>
             </div>
-            <div class="footer-section">
+            <div class="footer-column">
                 <h3>Contact Us</h3>
                 <ul>
-                    <li><a href="#">1-800-555-5555</a></li>
+                    <li>1-800-555-5555</li>
                     <li><a href="#">Join us</a></li>
                     <li><a href="#">Email us</a></li>
                     <li><a href="#">Customer Support</a></li>
                 </ul>
             </div>
-            <div class="footer-section">
+            <div class="footer-column">
                 <h3>Learning</h3>
                 <ul>
                     <li><a href="#">Modules</a></li>
@@ -582,52 +744,66 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                <p>&copy; 2049 Fitma</p>
-                <div style="display: flex; gap: 30px;">
-                    <a href="#" style="color: #e0e0e0; text-decoration: none;">Fitma Policies</a>
-                    <a href="#" style="color: #e0e0e0; text-decoration: none;">Terms of Use</a>
-                    <a href="#" style="color: #e0e0e0; text-decoration: none;">About us</a>
-                </div>
-            </div>
+            <span>&copy; 2049 Fitma</span>
+            <a href="#">Fitma Policies</a>
+            <a href="#">Terms of Use</a>
+            <a href="#">About us</a>
         </div>
     </footer>
 
     <script>
-        // Mobile navigation toggle
-        document.querySelector('.hamburger').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.classList.toggle('active');
-        });
+        // Sidebar functionality from second file
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+            const sidebarContainer = document.getElementById('sidebar-container');
+            const sidebarMenu = document.getElementById('sidebar-menu');
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                if (this.getAttribute('href').startsWith('#')) {
-                    e.preventDefault();
-                    const target = this.getAttribute('href');
-                    console.log(`Navigating to ${target}`);
+            // Open sidebar
+            hamburgerIcon.addEventListener('click', () => {
+                sidebarContainer.classList.add('open');
+                sidebarMenu.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            });
+
+            // Close sidebar by clicking close button
+            closeSidebarBtn.addEventListener('click', () => {
+                sidebarContainer.classList.remove('open');
+                sidebarMenu.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+
+            // Close sidebar by clicking outside the menu
+            sidebarContainer.addEventListener('click', (event) => {
+                if (event.target === sidebarContainer) {
+                    sidebarContainer.classList.remove('open');
+                    sidebarMenu.classList.remove('open');
+                    document.body.style.overflow = '';
                 }
+            });
+
+            // Close sidebar when a link inside is clicked
+            const sidebarLinks = document.querySelectorAll('.sidebar-links a');
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    sidebarContainer.classList.remove('open');
+                    sidebarMenu.classList.remove('open');
+                    document.body.style.overflow = '';
+                });
             });
         });
 
-        // File action functions
+        // Original functions from first file
         function downloadFile() {
             alert('Downloading file...');
-            // Add your download logic here
         }
 
         function viewFile() {
             alert('Opening file viewer...');
-            // Add your view logic here
         }
 
-        // Return button function
         function returnToPrevious() {
             alert('Returning to previous page...');
-            // You can replace this with:
-            // window.history.back();
-            // or navigate to a specific page
         }
     </script>
 </body>
